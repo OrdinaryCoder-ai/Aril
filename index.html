@@ -5,8 +5,299 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ad Tray — Aril</title>
 <meta name="description" content="Ad Tray catches pop-up ads before a tab is ever created and holds them in a small tray, rendered live, so you choose what actually opens." />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjIyIDEwIDg0IDEwOCIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIj4KICA8cGF0aCBkPSJNNjQsMTUgQzc5LDI5IDg2LDQ3IDg0LDY3IEM3Nyw3MiA3MSw3NCA2NCw3NCBDNTcsNzQgNTEsNzIgNDQsNjcgQzQyLDQ3IDQ5LDI5IDY0LDE1IFoiIGZpbGw9IiNCMDNBMkEiIG9wYWNpdHk9IjAuMzgiLz4KICA8cGF0aCBkPSJNMjgsNTUgQzI4LDkxIDQ0LDExMCA2NCwxMTMgQzg0LDExMCAxMDAsOTEgMTAwLDU1IEM4Nyw2OSA3Niw3NSA2NCw3NSBDNTIsNzUgNDEsNjkgMjgsNTUgWiIgZmlsbD0iI0ZGRkZGRiIvPgogIDxwYXRoIGQ9Ik0yOCw1NSBDMjgsOTEgNDQsMTEwIDY0LDExMyBDODQsMTEwIDEwMCw5MSAxMDAsNTUgQzg3LDY5IDc2LDc1IDY0LDc1IEM1Miw3NSA0MSw2OSAyOCw1NSBaIiBmaWxsPSIjQjAzQTJBIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLC0zKSIvPgo8L3N2Zz4K" />
+<style>
+/* Aril — an aril is the coat around a seed, so the visual idea is something
+   held and not yet opened. Deliberately quiet: system type, wide space,
+   almost no borders, one accent used only where something is being held. */
+
+:root {
+  --ink: #1d1d1f;
+  --grey: #6e6e73;
+  --hair: #e3e3e5;
+  --white: #ffffff;
+  --tint: #f5f5f7;
+  --garnet: #b03a2a;
+  --pad: clamp(1.25rem, 5vw, 3rem);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.024em; margin: 0; }
+
+a { color: var(--garnet); text-decoration: none; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+:focus-visible { outline: 2px solid var(--garnet); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid var(--hair);
+}
+
+.nav-inner {
+  max-width: 1000px; margin: 0 auto; padding: 0 var(--pad);
+  height: 46px; display: flex; align-items: center; justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  color: var(--ink); font-size: 1rem; font-weight: 600; letter-spacing: -0.02em;
+}
+.brand svg { width: 19px; height: 19px; }
+.brand .seed { fill: var(--garnet); opacity: 0.38; }
+.brand .coat { fill: var(--garnet); }
+
+.nav nav { display: flex; align-items: center; gap: clamp(0.9rem, 2.4vw, 1.8rem); }
+.nav nav a { font-size: 0.8125rem; color: var(--grey); }
+.nav nav a:hover { color: var(--ink); }
+.nav-cta { color: var(--garnet) !important; font-weight: 500; }
+
+/* ---------- hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: clamp(3.5rem, 9vw, 6.5rem) var(--pad) clamp(2rem, 5vw, 3.5rem);
+}
+
+.kicker {
+  font-size: 0.875rem; color: var(--grey); margin: 0 0 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6.4vw, 4.25rem);
+  line-height: 1.06;
+  max-width: 16ch;
+  margin: 0 auto 1.1rem;
+}
+
+.lede {
+  font-size: clamp(1.125rem, 2.2vw, 1.4rem);
+  color: var(--grey);
+  max-width: 34ch;
+  margin: 0 auto 2rem;
+  line-height: 1.42;
+}
+
+.actions {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.6rem; flex-wrap: wrap;
+}
+
+.btn {
+  background: var(--garnet); color: #fff;
+  font-size: 0.9375rem; font-weight: 500;
+  padding: 0.72rem 1.5rem; border-radius: 980px;
+}
+.btn:hover { filter: brightness(1.08); }
+
+.link { font-size: 0.9375rem; }
+.link:hover { text-decoration: underline; }
+
+/* ---------- the demo stage ---------- */
+
+.stage { margin: clamp(2.6rem, 6vw, 4.5rem) auto 0; max-width: 880px; }
+
+.browser {
+  background: var(--white);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05), 0 26px 60px -22px rgba(0,0,0,.32);
+  text-align: left;
+}
+
+.chrome-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px; background: var(--tint);
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #d3d3d7; }
+.url {
+  margin-left: 10px; font-size: 11.5px; color: var(--grey);
+  background: #fff; border-radius: 5px; padding: 3px 12px;
+  max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.tabstrip {
+  display: flex; gap: 4px; padding: 7px 10px 0; background: var(--tint);
+  min-height: 31px;
+}
+.tab {
+  font-size: 11px; padding: 5px 13px; background: #fff; color: var(--ink);
+  border-radius: 6px 6px 0 0; white-space: nowrap;
+}
+
+.viewport {
+  position: relative; min-height: 300px; overflow: hidden;
+  padding: clamp(1.8rem, 4vw, 2.6rem) 1.2rem;
+}
+
+.content { max-width: 16rem; margin-left: clamp(0.5rem, 4%, 2.5rem); text-align: center; }
+.c-h { font-size: 1.1875rem; font-weight: 600; margin: 0 0 0.25rem; letter-spacing: -0.02em; }
+.c-p { font-size: 0.9375rem; color: var(--grey); margin: 0 0 1.1rem; }
+
+.bait {
+  font: inherit; font-size: 0.9375rem; font-weight: 500;
+  background: var(--garnet); color: #fff; border: 0;
+  padding: 0.6rem 1.4rem; border-radius: 980px; cursor: pointer;
+}
+.bait:hover { filter: brightness(1.08); }
+
+.c-s { font-size: 0.75rem; color: #a1a1a6; margin: 1rem 0 0; }
+
+/* held windows, nested in the corner */
+
+.tray { position: absolute; top: 13px; right: 13px; width: 146px; }
+
+.tray-head {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--grey);
+  background: #fff; border-radius: 980px; padding: 4px 5px 4px 11px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.04);
+  margin-bottom: 7px;
+}
+.tray-head #trayCount { font-weight: 600; color: var(--ink); }
+.tray-head button {
+  margin-left: auto; font: inherit; font-size: 10.5px;
+  border: 0; background: var(--tint); color: var(--grey);
+  border-radius: 980px; padding: 3px 9px; cursor: pointer;
+}
+.tray-head button:hover { color: var(--ink); }
+
+.tray-stack { position: relative; height: 134px; }
+
+.held {
+  position: absolute; top: 0; right: 0; width: 132px;
+  background: #fff; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 10px 22px -12px rgba(0,0,0,.45);
+}
+
+.held-bar { display: flex; align-items: center; gap: 3px; background: var(--tint); padding: 5px 7px; }
+.held-bar i { width: 4.5px; height: 4.5px; border-radius: 50%; background: #ccccd1; }
+.held-bar span {
+  margin-left: 4px; font-size: 8px; color: var(--grey);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.held-body { height: 50px; padding: 8px 9px; font-size: 8.5px; line-height: 1.4; color: #a1a1a6; }
+.held-body b { display: block; font-size: 9.5px; color: var(--ink); margin-bottom: 3px; font-weight: 600; }
+
+.held-foot { display: flex; gap: 5px; padding: 6px 7px 7px; }
+.held-foot button {
+  font: inherit; font-size: 8.5px; font-weight: 500;
+  border: 0; border-radius: 980px; padding: 4px 9px; cursor: pointer;
+}
+.held-foot .go { background: var(--garnet); color: #fff; }
+.held-foot .no { margin-left: auto; background: var(--tint); color: var(--grey); }
+
+@keyframes settle {
+  from { transform: translate(-22px, 40px) scale(0.86); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.held.entering { animation: settle 0.32s cubic-bezier(0.2,0.7,0.3,1) both; }
+
+.caption { font-size: 0.8125rem; color: var(--grey); text-align: center; margin: 1.1rem 0 0; }
+
+/* ---------- quote band ---------- */
+
+.quote {
+  padding: clamp(3rem, 8vw, 5.5rem) var(--pad);
+  text-align: center;
+}
+.quote p {
+  margin: 0 auto; max-width: 22ch;
+  font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+  font-weight: 600; letter-spacing: -0.024em; line-height: 1.2;
+}
+
+/* ---------- panels ---------- */
+
+.panel { padding: clamp(3.2rem, 8vw, 5.5rem) var(--pad); }
+.panel.tinted { background: var(--tint); }
+.panel.center { text-align: center; }
+
+.panel h2 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  max-width: 18ch; margin: 0 auto clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.triple, .quad {
+  max-width: 1000px; margin: 0 auto;
+  display: grid; gap: clamp(1.8rem, 4vw, 3rem);
+}
+.triple { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.quad { grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+
+.triple h3, .quad h3 { font-size: 1.0625rem; margin: 0 0 0.45rem; }
+.triple p, .quad p { margin: 0; color: var(--grey); font-size: 0.9375rem; max-width: 34ch; }
+
+.panel.center .sub { color: var(--grey); margin: -1.6rem 0 2rem; }
+.fineprint { font-size: 0.75rem; color: #a1a1a6; margin: 1.6rem 0 0; }
+
+/* ---------- about ---------- */
+
+.panel.dark { background: var(--ink); color: #d6d6d8; }
+.panel.dark h2 { color: #fff; text-align: left; margin-left: 0; }
+.narrow { max-width: 50ch; margin: 0 auto; }
+.panel.dark p { margin: 0 0 1.1rem; }
+.panel.dark .by { color: #86868b; margin-top: 1.8rem; }
+
+/* ---------- footer ---------- */
+
+footer { border-top: 1px solid var(--hair); }
+.foot-inner {
+  max-width: 1000px; margin: 0 auto; padding: 1.6rem var(--pad);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  font-size: 0.8125rem; color: var(--grey);
+}
+.foot-inner span { font-weight: 600; color: var(--ink); }
+.foot-inner nav { display: flex; gap: 1.4rem; }
+.foot-inner a { color: var(--grey); }
+.foot-inner a:hover { color: var(--ink); }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 640px) {
+  .quad { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .nav nav a:not(.nav-cta) { display: none; }
+  .viewport { min-height: 272px; }
+  .tray { width: 124px; }
+  .held { width: 112px; }
+  .content { max-width: 12rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .held.entering { animation: none; }
+}
+
+</style>
 </head>
 <body>
 
@@ -171,6 +462,82 @@
   </div>
 </footer>
 
-<script src="demo.js"></script>
+<script>
+// Pressing the bait button on the simulated page adds a held pop-up to the
+// tray instead of opening a tab. Showing the mechanic beats describing it.
+
+(function () {
+  const bait = document.getElementById("baitBtn");
+  const tray = document.getElementById("tray");
+  const stack = document.getElementById("trayStack");
+  const countEl = document.getElementById("trayCount");
+  const clearBtn = document.getElementById("clearBtn");
+  const hint = document.getElementById("demoHint");
+  if (!bait || !stack) return;
+
+  const OFFERS = [
+    { host: "win-prize-now.example", title: "You are visitor #1,000,000" },
+    { host: "hd-player-update.example", title: "Your player is out of date" },
+    { host: "secure-scan.example", title: "3 issues found on your device" },
+    { host: "mega-deals.example", title: "Offer ends in 04:59" },
+    { host: "cdn-redirect.example", title: "Redirecting to sponsor" }
+  ];
+
+  let held = [];
+  let n = 0;
+
+  function draw() {
+    tray.hidden = held.length === 0;
+    countEl.textContent = held.length;
+    stack.innerHTML = "";
+
+    held.slice(-3).forEach((item, i, arr) => {
+      const layer = arr.length - 1 - i;
+      const el = document.createElement("div");
+      el.className = "held" + (item.fresh ? " entering" : "");
+      el.style.top = layer * 7 + "px";
+      el.style.right = layer * 7 + "px";
+      el.style.zIndex = String(10 - layer);
+      el.style.opacity = String(1 - layer * 0.1);
+      el.innerHTML =
+        '<div class="held-bar"><i></i><i></i><i></i><span>' + item.host + "</span></div>" +
+        '<div class="held-body"><b>' + item.title + "</b>advertisement</div>" +
+        '<div class="held-foot"><button class="go" type="button">Open</button>' +
+        '<button class="no" type="button">Dismiss</button></div>';
+      el.querySelector(".go").addEventListener("click", () => remove(item.id));
+      el.querySelector(".no").addEventListener("click", () => remove(item.id));
+      stack.appendChild(el);
+      item.fresh = false;
+    });
+  }
+
+  function remove(id) {
+    held = held.filter((h) => h.id !== id);
+    draw();
+    if (!held.length) hint.textContent = "Nothing held. Press Play in HD again.";
+  }
+
+  bait.addEventListener("click", () => {
+    const offer = OFFERS[n % OFFERS.length];
+    n += 1;
+    held.push({ id: n, host: offer.host, title: offer.title, fresh: true });
+    draw();
+    hint.textContent =
+      held.length === 1
+        ? "No new tab. It is waiting in the corner."
+        : held.length + " held, and the tab strip has not changed.";
+  });
+
+  clearBtn.addEventListener("click", () => {
+    held = [];
+    n = 0;
+    draw();
+    hint.textContent = "Try it. Press Play in HD.";
+  });
+
+  draw();
+})();
+
+</script>
 </body>
 </html>
