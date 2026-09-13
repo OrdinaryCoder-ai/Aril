@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy — Ad Tray · Calyx</title>
+<meta name="description" content="Ad Tray collects nothing. Everything it stores stays in your browser." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .doc { padding: clamp(2.5rem, 7vw, 5rem) var(--gutter); max-width: 68ch; }
+  .doc h1 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin: 0 0 0.5rem; }
+  .doc .updated { color: var(--moss); font-size: 0.8125rem; margin: 0 0 2.4rem; font-family: "Archivo", sans-serif; }
+  .doc h2 { font-size: 1.0625rem; margin: 2.2rem 0 0.6rem; }
+  .doc p, .doc li { color: #33403a; }
+  .doc ul { padding-left: 1.1rem; }
+  .doc li { margin-bottom: 0.35rem; }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="index.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 21c0-5-3.2-8.4-7.5-9.4C4.5 16.6 7.6 20.4 12 21Z"/>
+      <path d="M12 21c0-5 3.2-8.4 7.5-9.4C19.5 16.6 16.4 20.4 12 21Z"/>
+      <path d="M12 21c-2.4-4.4-1.6-8.9 1.6-12C15.2 13.1 14.7 17.4 12 21Z"/>
+    </svg>
+    Calyx
+  </a>
+  <nav><a href="index.html">Back to Ad Tray</a></nav>
+</header>
+
+<main class="doc">
+  <h1>Privacy</h1>
+  <p class="updated">Last updated: 13 September 2026</p>
+
+  <p>
+    Ad Tray does not collect, transmit, sell, or share any personal
+    information. There is no account, no server, and no analytics. I receive
+    nothing from your copy of the extension.
+  </p>
+
+  <h2>What is stored, and where</h2>
+  <p>
+    The following is kept in <code>chrome.storage.local</code> on your own
+    device, and nowhere else:
+  </p>
+  <ul>
+    <li>The pop-ups currently held in the tray, including their URL and hostname</li>
+    <li>Your trusted-site list</li>
+    <li>Any always-hold rules you create</li>
+    <li>Whether the tray is visible or minimised</li>
+    <li>A short local log of recent decisions, so you can see why a pop-up was held or allowed</li>
+  </ul>
+  <p>
+    Removing the extension deletes all of it. You can clear the trusted-site
+    list at any time from the extension’s settings.
+  </p>
+
+  <h2>Network requests</h2>
+  <p>
+    The extension makes no outbound requests of its own. An optional
+    reputation check against Google Safe Browsing exists, but it is inactive
+    unless you enter your own API key in the settings. With no key, no request
+    is made and held pop-ups are simply labelled unknown.
+  </p>
+
+  <h2>Third-party pages in the tray</h2>
+  <p>
+    Held pop-ups render inside sandboxed frames. Those are real websites and
+    may set cookies or collect data under their own policies, exactly as they
+    would have if the pop-up had opened as a tab. I have no access to and no
+    control over what they do. The sandbox does prevent them from opening
+    further pop-ups, navigating the page you are on, or reaching their own
+    origin’s cookies and storage.
+  </p>
+
+  <h2>Permissions</h2>
+  <p>
+    Ad Tray requests access to all sites because a pop-up can come from any
+    site. The interceptor stays inert during normal browsing and acts only
+    when a page tries to open a new window. It does not read page content,
+    form fields, or credentials.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    If this policy changes, the date above changes with it. If a future
+    version ever does send data anywhere, that will be stated here plainly
+    and asked for explicitly, not buried.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions or problems: <a href="mailto:REPLACE@EXAMPLE.COM">REPLACE@EXAMPLE.COM</a>
+  </p>
+</main>
+
+<footer>
+  <p>Calyx</p>
+  <nav>
+    <a href="index.html">Ad Tray</a>
+    <a href="https://github.com/">GitHub</a>
+  </nav>
+</footer>
+
+</body>
+</html>

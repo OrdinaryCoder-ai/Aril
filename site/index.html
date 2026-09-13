@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ad Tray — pop-ups, held until you decide · Calyx</title>
+<meta name="description" content="Ad Tray catches pop-up ads before a tab is ever created and holds them in a small tray, rendered live, so you choose what actually opens." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="masthead">
+  <a class="wordmark" href="/">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 21c0-5-3.2-8.4-7.5-9.4C4.5 16.6 7.6 20.4 12 21Z"/>
+      <path d="M12 21c0-5 3.2-8.4 7.5-9.4C19.5 16.6 16.4 20.4 12 21Z"/>
+      <path d="M12 21c-2.4-4.4-1.6-8.9 1.6-12C15.2 13.1 14.7 17.4 12 21Z"/>
+    </svg>
+    Calyx
+  </a>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#limits">Limits</a>
+    <a href="#calyx">About</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>A pop-up shouldn’t get to decide it’s important.</h1>
+      <p class="lede">
+        Ad Tray catches pop-up ads before the browser ever makes a tab.
+        Each one loads in a small window in the corner instead, so you can
+        see what it actually is and then open it, or not.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#install">Get the extension</a>
+        <a class="btn btn-quiet" href="#how">See how it works</a>
+      </div>
+      <p class="note">Free. Works in Chrome. Nothing leaves your browser.</p>
+    </div>
+
+    <div class="hero-demo">
+      <figure class="browser" id="demo">
+        <figcaption class="sr-only">
+          An interactive demonstration. Activating the bait button on the
+          simulated page adds a held pop-up to the tray instead of opening
+          a tab.
+        </figcaption>
+
+        <div class="browser-bar">
+          <span class="light"></span><span class="light"></span><span class="light"></span>
+          <span class="browser-url">freemovies-stream.example</span>
+        </div>
+
+        <div class="browser-tabs" id="demoTabs">
+          <span class="tab active">Free movies</span>
+        </div>
+
+        <div class="browser-page">
+          <div class="fake-content">
+            <p class="fake-h">Watch now, no signup</p>
+            <p class="fake-p">Start streaming in HD.</p>
+            <button class="bait" id="baitBtn">Play in HD</button>
+            <p class="fake-small">By continuing you agree to our partners.</p>
+          </div>
+
+          <div class="tray" id="tray" hidden>
+            <div class="tray-head">
+              <span class="tray-count" id="trayCount">0</span> held
+              <button class="tray-clear" id="clearBtn">Clear</button>
+            </div>
+            <div class="tray-stack" id="trayStack"></div>
+          </div>
+        </div>
+      </figure>
+      <p class="demo-hint" id="demoHint">Try it: press “Play in HD”.</p>
+    </div>
+  </section>
+
+  <section class="strip">
+    <p>
+      Blockers destroy the pop-up. Ad Tray keeps it, silently, where it
+      can’t interrupt you. Those are different promises.
+    </p>
+  </section>
+
+  <section id="how" class="how">
+    <h2>What happens when a site tries to open one</h2>
+    <ol class="steps">
+      <li>
+        <h3>The request is cancelled</h3>
+        <p>
+          Ad Tray intercepts the call the page makes to open a window. The
+          browser is never asked for a tab, so nothing appears in your tab
+          strip and nothing steals focus.
+        </p>
+      </li>
+      <li>
+        <h3>The page loads in the tray</h3>
+        <p>
+          The target renders inside a small sandboxed frame in the corner.
+          It can’t open more pop-ups, navigate the page you’re on, or reach
+          its own cookies.
+        </p>
+      </li>
+      <li>
+        <h3>You decide</h3>
+        <p>
+          Open it in a real tab, dismiss it, or trust the site so its
+          pop-ups pass through from then on. Logins and payment windows are
+          trusted out of the box.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="limits" class="limits">
+    <h2>What it isn’t</h2>
+    <div class="limit-grid">
+      <div>
+        <h3>Not an antivirus</h3>
+        <p>
+          It can’t see your files or your system. Nothing outside the
+          browser is in its reach, and any extension claiming otherwise is
+          overselling.
+        </p>
+      </div>
+      <div>
+        <h3>Not an ad blocker</h3>
+        <p>
+          Banners and in-page ads are untouched. Ad Tray only deals with
+          windows that try to open on their own.
+        </p>
+      </div>
+      <div>
+        <h3>Not always going to render</h3>
+        <p>
+          Some pages refuse to display in a frame or need cookies the
+          sandbox withholds. Those show an empty preview, and the open
+          button still works.
+        </p>
+      </div>
+      <div>
+        <h3>Not collecting anything</h3>
+        <p>
+          There’s no account, no server, and no telemetry. Your held
+          pop-ups and trusted sites stay in your browser.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" class="install">
+    <h2>Get it</h2>
+    <p>
+      Ad Tray is free and open source. If it does something annoying, the
+      issue tracker is the fastest way to reach me.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#" id="storeLink">Chrome Web Store</a>
+      <a class="btn btn-quiet" href="https://github.com/" id="repoLink">Source on GitHub</a>
+    </div>
+    <p class="note">Replace both links once the store listing is live.</p>
+  </section>
+
+  <section id="calyx" class="calyx">
+    <div class="calyx-inner">
+      <h2>Calyx</h2>
+      <p>
+        A calyx is the ring of sepals that wraps a flower bud and holds it
+        closed until it’s ready to open. It isn’t a wall. It’s a pause.
+      </p>
+      <p>
+        That’s the idea behind the software I want to build here: tools that
+        sit between you and something demanding your attention, and hand the
+        timing back to you. Ad Tray is the first one, and it’s small on
+        purpose.
+      </p>
+      <p class="signoff">Built by one person, in the open.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Calyx</p>
+  <nav>
+    <a href="privacy.html">Privacy</a>
+    <a href="https://github.com/">GitHub</a>
+  </nav>
+</footer>
+
+<script src="demo.js"></script>
+</body>
+</html>
